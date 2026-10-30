@@ -1,0 +1,144 @@
+.slds-box {
+    margin-bottom: 1rem;
+    padding: 4px;
+}
+.slds-box .custom{
+    border: 1px solid #ccc;;
+    border-radius: 3px;
+    height: 55px;
+    align-content: center;
+    margin-top: 1rem;
+}
+.my-brand {
+    --slds-c-button-brand-color-background: rgb(0, 24, 168);
+}
+.title-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+.date {
+    right: 0;
+    position: absolute;
+}
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.text {
+    white-space: pre-wrap
+}
+
+.slds-m-left_x-small{
+    color:white
+}
+.comment-button {
+    background-color: rgb(0, 24, 168);
+    color: white;
+}
+
+.slds-rich-text-editor {
+    width: 625px;
+}
+
+.commentButton {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 0px;
+    color: white;
+    border-radius: 0px;
+    margin-top: 15px;
+}
+
+.comment-richtext {
+    width: 100%;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+.comment-richtext lightning-input-rich-text {
+    width: 100%;
+    display: block;
+}
+
+.comment-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.comment-box {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    padding: 10px;
+    padding-bottom: 30px;
+    position: relative;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    align-content: flex-end;
+
+}
+
+.actions .attachment-section {
+    margin-top: 10px;
+    width:1000px;
+}
+.actions .comment-button-section {
+    margin-top: 30px;
+}
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -30px;
+    /* width:500px; */
+}
+
+.attachment-icon {
+    margin-right: auto;
+    padding-left: 0px;
+    border: none;
+}
+
+
+ .hidden-file-upload {
+    display: none; 
+}
+
+.comment-button:hover {
+    background-color:rgb(0, 24, 168);
+}
+.attachment-preview {
+    margin-top: 0.5rem;
+    border: 1px dashed #ccc;
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: none; 
+    cursor: pointer;
+    align-content: space-between;
+}
+
+.comment-textarea {
+    overflow: auto;
+    margin-left: -10px;
+    margin-top: -10px;
+    border-radius: 3px;
+    width: 645px;
+    height: 110px;
+    resize: none;
+}
+
+.preview-image {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+}

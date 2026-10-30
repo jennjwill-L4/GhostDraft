@@ -1,0 +1,10 @@
+<apex:page standardstylesheets="false">
+  <h1>RFC and Case Dashboard</h1>
+  <iframe title="RFC and Case Dashboard 2" 
+    width="1140" 
+    height="541.25" 
+    src="https://app.powerbi.com/reportEmbed?reportId=ddee84d6-b16c-48a2-8293-3f050b6423db&autoAuth=true&ctid=9887d496-52ae-4c6f-89a4-261752049b12&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXVzLW5vcnRoLWNlbnRyYWwtcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D" 
+    frameborder="0" 
+    allowFullScreen="true">
+  </iframe>
+</apex:page>

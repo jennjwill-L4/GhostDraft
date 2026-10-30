@@ -1,0 +1,183 @@
+<template>
+    <template lwc:if={isCase}>
+        <template lwc:if={isClosed}>
+            <div class="slds-box slds-theme_warning slds-m-bottom_small">
+                <p>This case is closed for commenting. If you need additional support,
+                   please open a new case.</p>
+            </div>
+        </template>
+
+        <div class="comment-container">
+            <div class="comment-box">
+
+                <div class="rich-text-wrapper"
+                     onfocusin={handleRteFocusIn}
+                     onfocusout={handleRteFocusOut}>
+                    <lightning-input-rich-text
+                        value={newComment}
+                        placeholder="Write a comment..."
+                        disabled={isClosed}
+                        onchange={handleCommentChange}
+                        formats={richTextFormats}>
+                    </lightning-input-rich-text>
+                </div>
+
+                <div class="attachment-preview" id="attachmentPreview" lwc:dom="manual"></div>
+            </div>
+
+            <div class="actions">
+                <div class="attachment-section">
+                    <lightning-file-upload
+                        name="fileUploader"
+                        accept=".pdf,.docx,.png,.jpg"
+                        record-id={myRecordId}
+                        onuploadfinished={handleUploadFinished}
+                        multiple
+                        disabled={isClosed}
+                        class="file-selector-large">
+                    </lightning-file-upload>
+                </div>
+
+                <div class="comment-button-section">
+                    <lightning-button
+                        variant="brand"
+                        label="Comment"
+                        title="Submit Comment"
+                        onclick={postComment}
+                        disabled={isClosed}
+                        class="slds-m-left_x-small">
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+
+        <lightning-card title="Case Activity History">
+            <div class="slds-box slds-theme_default">
+                <div class="filter-section">
+                    <lightning-combobox name="filterType" label="Filter by Type" value={filterType}
+                        placeholder="Select a filter" options={filterOptions} onchange={handleFilterChange}>
+                    </lightning-combobox>
+                    <lightning-combobox name="sortOrder" label="Sort by Date" value={sortOrder}
+                        placeholder="Select sort order" options={sortOptions} onchange={handleSortChange}>
+                    </lightning-combobox>
+                </div>
+
+                <div if:true={loading}>
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                </div>
+                <template if:true={filteredCommunications}>
+                    <template for:each={filteredCommunications} for:item="communication">
+                        <div key={communication.feedItem.id}
+                            class="slds-box slds-box_x-small slds-m-bottom_x-small slds-theme_shade">
+                            <div class="title-container">
+
+                                    <template lwc:if={communication.currentUser}>
+                                        <lightning-icon icon-name="standard:case" alternative-text="Case Comment"
+                                        size="small"></lightning-icon>
+                                </template>
+                                <template lwc:else>
+                                    <lightning-icon icon-name="standard:case_comment" alternative-text="Case Comment"
+                                        size="small"></lightning-icon>
+    
+                                </template>
+                                    
+
+                                <p class="date slds-text-color_weak">{communication.createdDate} {message}</p>
+                                <template lwc:if={communication.caseCreated}>
+
+                                <p><strong>{communication.feedItem.CreatedBy.Name}</strong> - {createdCaseText}</p>
+                            </template>
+                            <template lwc:else>
+                                <p><strong>{communication.feedItem.CreatedBy.Name}</strong></p>
+
+                            </template>
+                               
+                            </div>
+
+                                
+                               
+                                        <lightning-formatted-rich-text class="text"
+                                        value={communication.feedItem.Body}
+                                    ></lightning-formatted-rich-text>
+                        
+                             
+                                
+                                
+                                <template if:true={showAttachments}>
+ 
+                                    <!-- <lightning-card > -->
+                                        <template for:each={communication.attachments} for:item="singleAttachment">
+                                            <div key={singleAttachment.id} class="slds-box custom">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                        <p><strong>FileName - </strong>{singleAttachment.title}</p>
+                                                    </div>
+                                                    
+                                                    <div class="slds-col slds-large-size_8-of-12 slds-medium-size_8-of-12 slds-size_12-of-12 slds-grid slds-grid_align-end">
+                                                        <lightning-button label="Preview" 
+                                                            variant="brand"
+                                                            data-id={singleAttachment.id}
+                                                            onclick={previewHandler}
+                                                        ></lightning-button>
+                                                        
+                                                        <lightning-button label="Download" 
+                                                            class="slds-m-left_small"
+                                                            variant="brand"
+                                                            data-id={singleAttachment.id}
+                                                             onclick={handleDownload}
+                                                        ></lightning-button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    <!-- </lightning-card>  -->
+
+                                </template>
+                        </div>
+                    </template>
+                </template>
+                <template if:true={error}>
+                    <p class="slds-text-color_error">{error}</p>
+                </template>
+            </div>
+        </lightning-card>
+    </template>
+    <template if:true={showPreviewModal}>
+        <section  role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+            <button class="slds-button slds-button_icon slds-modal__close" onclick={closePreviewModal}>
+            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#close"></use>
+            </svg>
+            <span class="slds-assistive-text" >Cancel and close</span>
+            </button>
+            <div class="slds-modal__header">
+            <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate" tabindex="-1">{modal.title}</h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <template if:true={showImage}>
+                        <img
+                    src={modal.Url}
+                    alt={modal.title}
+                        class="preview-image"> 
+
+                </template>
+                <template if:true={showIframe}>
+                    <iframe
+                        if:true={showIframe}
+                        src={modal.Url}
+                        width="100%"
+                        height="600px"
+                        style="border:none"
+                    ></iframe>
+
+                </template>
+                
+            </div>
+           
+            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    
+</template>

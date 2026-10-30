@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Case Deflection (ClickHelp)</masterLabel>
+    <description>Shows ClickHelp articles for the subject and asks if the issue is resolved, before any Case is created.</description>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="subject" type="String" label="Subject" role="inputOnly"/>
+            <property name="description" type="String" label="Description (rich text HTML)" role="inputOnly"/>
+            <property name="issueResolved" type="Boolean" label="Issue Resolved (output)" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,0 +1,207 @@
+<template>
+    <div class="slds-card slds-p-around_medium">
+
+        <!-- Optional standalone search box -->
+        <template if:true={showSearchBox}>
+            <div class="slds-grid slds-gutters_x-small slds-m-bottom_medium">
+                <div class="slds-col slds-grow">
+                    <lightning-input
+                        type="search"
+                        variant="label-hidden"
+                        placeholder="Ask a question..."
+                        value={term}
+                        onchange={handleInputChange}
+                        onkeydown={handleKeyDown}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-no-flex">
+                    <lightning-button label="Search" variant="brand" onclick={handleSearchClick}></lightning-button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Loading -->
+        <template if:true={isLoading}>
+            <div class="slds-is-relative slds-p-vertical_large">
+                <lightning-spinner alternative-text="Searching..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- ============ KNOWLEDGE (ClickHelp) ============ -->
+        <template if:true={hasArticles}>
+            <div class="slds-m-bottom_large">
+                <header class="slds-border_bottom slds-p-bottom_x-small slds-m-bottom_x-small">
+                    <h2 class="slds-text-heading_small">Knowledge</h2>
+                    <p class="slds-text-body_small slds-text-color_weak">{articleCountLabel}</p>
+                </header>
+
+                <template for:each={pagedArticles} for:item="a">
+                    <div key={a.key} class="result-row slds-p-vertical_x-small slds-border_bottom">
+                        <a href={a.fullUrl} target="_blank" rel="noopener noreferrer" class="article-title">
+                            <lightning-formatted-rich-text value={a.titleHtml}></lightning-formatted-rich-text>
+                        </a>
+                        <div class="snippet-clamp slds-text-body_small slds-text-color_weak slds-m-top_xxx-small">
+                            <lightning-formatted-rich-text value={a.snippetHtml}></lightning-formatted-rich-text>
+                        </div>
+                        <template if:true={a.projectTitle}>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xxx-small">{a.projectTitle}</p>
+                        </template>
+                    </div>
+                </template>
+
+                <template if:true={articlePager.show}>
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-top_small">
+                        <span class="slds-text-body_small slds-text-color_weak">{articlePager.label}</span>
+                        <div>
+                            <lightning-button label="Previous" onclick={articlePrev} disabled={articlePager.disablePrev} class="slds-m-right_x-small"></lightning-button>
+                            <lightning-button label="Next" onclick={articleNext} disabled={articlePager.disableNext}></lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- ============ FILES ============ -->
+        <template if:true={hasFiles}>
+            <div class="slds-m-bottom_large">
+                <header class="slds-border_bottom slds-p-bottom_x-small slds-m-bottom_x-small">
+                    <h2 class="slds-text-heading_small">Files</h2>
+                    <p class="slds-text-body_small slds-text-color_weak">{fileCountLabel}</p>
+                </header>
+
+                <table class="slds-table slds-table_cell-buffer slds-no-row-hover">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col"><div class="slds-truncate">Title</div></th>
+                            <th scope="col"><div class="slds-truncate">Size</div></th>
+                            <th scope="col"><div class="slds-truncate">Type</div></th>
+                            <th scope="col"><div class="slds-truncate">Last Modified</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={pagedFiles} for:item="f">
+                            <tr key={f.id}>
+                                <td>
+                                    <template if:true={f.isImage}>
+                                        <button type="button" class="link-btn"
+                                            data-type="image" data-url={f.fileUrl} data-title={f.title} data-name={f.downloadName}
+                                            onclick={openPreview}>{f.title}</button>
+                                    </template>
+                                    <template if:true={f.isPdf}>
+                                        <a href={f.fileUrl} target="_blank" rel="noopener noreferrer" class="link-btn">{f.title}</a>
+                                    </template>
+                                    <template if:true={f.isOther}>
+                                        <button type="button" class="link-btn"
+                                            data-type="none" data-url={f.fileUrl} data-title={f.title} data-name={f.downloadName}
+                                            onclick={openPreview}>{f.title}</button>
+                                    </template>
+                                </td>
+                                <td>{f.sizeLabel}</td>
+                                <td>{f.fileExtension}</td>
+                                <td>
+                                    <lightning-formatted-date-time value={f.lastModifiedDate}></lightning-formatted-date-time>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <template if:true={filePager.show}>
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-top_small">
+                        <span class="slds-text-body_small slds-text-color_weak">{filePager.label}</span>
+                        <div>
+                            <lightning-button label="Previous" onclick={filePrev} disabled={filePager.disablePrev} class="slds-m-right_x-small"></lightning-button>
+                            <lightning-button label="Next" onclick={fileNext} disabled={filePager.disableNext}></lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- ============ CASES ============ -->
+        <template if:true={hasCases}>
+            <div class="slds-m-bottom_large">
+                <header class="slds-border_bottom slds-p-bottom_x-small slds-m-bottom_x-small">
+                    <h2 class="slds-text-heading_small">Cases</h2>
+                    <p class="slds-text-body_small slds-text-color_weak">{caseCountLabel}</p>
+                </header>
+
+                <table class="slds-table slds-table_cell-buffer slds-no-row-hover">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col"><div class="slds-truncate">Case Number</div></th>
+                            <th scope="col"><div class="slds-truncate">Subject</div></th>
+                            <th scope="col"><div class="slds-truncate">Status</div></th>
+                            <th scope="col"><div class="slds-truncate">Opened</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={pagedCases} for:item="c">
+                            <tr key={c.id}>
+                                <td>
+                                    <button type="button" class="link-btn" data-id={c.id} onclick={openCase}>{c.caseNumber}</button>
+                                </td>
+                                <td>{c.subject}</td>
+                                <td>{c.status}</td>
+                                <td>
+                                    <lightning-formatted-date-time value={c.createdDate}></lightning-formatted-date-time>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <template if:true={casePager.show}>
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-top_small">
+                        <span class="slds-text-body_small slds-text-color_weak">{casePager.label}</span>
+                        <div>
+                            <lightning-button label="Previous" onclick={casePrev} disabled={casePager.disablePrev} class="slds-m-right_x-small"></lightning-button>
+                            <lightning-button label="Next" onclick={caseNext} disabled={casePager.disableNext}></lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- Empty state -->
+        <template if:true={showEmptyState}>
+            <div class="slds-align_absolute-center slds-p-vertical_large slds-text-color_weak">
+                No results found for &ldquo;{term}&rdquo;.
+            </div>
+        </template>
+
+        <!-- ============ IMAGE PREVIEW MODAL ============ -->
+        <template if:true={previewOpen}>
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={closePreview}>
+                            <lightning-icon icon-name="utility:close" size="small" variant="inverse"></lightning-icon>
+                        </button>
+                        <h2 class="slds-modal__title slds-truncate">{previewTitle}</h2>
+                    </header>
+
+                    <div class="slds-modal__content slds-p-around_medium preview-body">
+                        <template if:true={isImagePreview}>
+                            <img src={previewUrl} alt={previewTitle} class="preview-media"/>
+                        </template>
+                        <template if:true={isNoPreview}>
+                            <div class="slds-align_absolute-center slds-text-color_weak slds-p-vertical_x-large">
+                                No preview available for this file type.
+                            </div>
+                        </template>
+                    </div>
+
+                    <footer class="slds-modal__footer">
+                        <a href={previewUrl} download={previewName}
+                           class="slds-button slds-button_brand">Download</a>
+                        <button class="slds-button slds-button_neutral" onclick={closePreview}>Close</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </div>
+</template>

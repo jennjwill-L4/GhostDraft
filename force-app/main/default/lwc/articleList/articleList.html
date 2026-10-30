@@ -1,0 +1,92 @@
+<template>
+    <lightning-card hide-header="true" label="global">
+        <div class="slds-tabs_default slds-m-bottom_medium">
+            <div class="tabs-wrapper">
+                <ul class="slds-tabs_default__nav" role="tablist">
+                    <template for:each={visibleTopics} for:item="topic">
+                        <li key={topic.Id} class="slds-tabs_default__item" role="presentation">
+                            <button 
+                                class={topic.class}
+                                data-id={topic.Id}
+                                onclick={handleTopicChange}>
+                                {topic.Name}
+                            </button>
+                        </li>
+                    </template>
+                    <template if:true={showMoreButton}>
+                        <li class="slds-tabs_default__item dropdown-parent">
+                            <button class="dropdown-button" onclick={toggleDropdown}>
+                                MORE
+                            </button>
+                            <div class="dropdown-menu">
+                                <ul >
+                                    <template for:each={hiddenTopics} for:item="topic">
+                                        <li key={topic.Id}>
+                                            <button
+                                                    style="color:red;"
+                                                class={topic.class}
+                                                data-id={topic.Id}
+                                                onclick={handleTopicChange}>
+                                                {topic.Name}
+                                            </button>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+        <div class="sortdropdown-container">
+            <button class="sortdropdown-button" onclick={sorttoggleDropdown}>
+                <lightning-icon icon-name="utility:slider" alternative-text="Sort" size="x-small"></lightning-icon>
+                <span class="sortbutton-label">Sort</span>
+            </button>
+            <div if:true={isSortDropdownOpen} class="sortdropdown-menu">
+                <ul>
+                    <template for:each={sortOptions} for:item="option">
+                        <li key={option.Id}>
+                            <button 
+                            data-selected={option.selected}
+                                data-id={option.id}
+                                onclick={sort}>
+                                {option.value}
+                            </button>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+        
+
+        <template if:true={articles}>
+            <div class="slds-grid slds-wrap">
+                <template for:each={displayedArticles} for:item="article">
+                    <div key={article.Id} class="slds-col slds-size_1-of-3 slds-p-around_medium">
+                        <div  class="tile" onclick={handleTileClick} data-id={article.Id}>
+                           
+                                <img src={article.Image__c} alt="Article Image" class="tile-image"/>
+                                <h3 class="tile-title">{article.Title}</h3>
+                                <p class="published-date"><strong>Published: {article.publishedDate}, {article.publishedYear}</strong></p>
+        
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+        <template if:true={isLoadingMore}>
+            <div class="slds-spinner slds-spinner_brand slds-spinner_small slds-spinner_inline">
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </template>
+        <template if:true={hasMoreArticles}>
+            <div class="button-container">
+                <button  onclick={loadMoreArticles} class="custom-button">Load More</button>
+            </div>
+           
+        </template>
+    
+    </lightning-card>
+</template>

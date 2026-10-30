@@ -1,0 +1,8 @@
+<template>
+    <div class="slds-text-heading_small slds-m-bottom_small slds-m-top_medium">Suggested Help Articles:</div>
+        <div for:each={articles} for:item="article" key={article.Id} style="cursor:pointer;">
+                <a onclick={goToArticle} data-url={article.UrlName} data-id={article.Id}>
+                    {article.Title}
+                </a>
+        </div>
+</template>

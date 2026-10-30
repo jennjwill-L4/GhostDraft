@@ -1,0 +1,174 @@
+<template >
+
+    <!-- <div style="margin-left: -10%; margin-right: -10%; background-color: white; text-align:center;">
+        <h3 class="header">Top Rated Articles</h3>
+        <div class="container">
+            <div class="column" style="margin-left: 10%;">
+                <template if:true={leftColumnArticles}>
+                    <template for:each={leftColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+
+                        </div>
+                    </template>
+                </template>
+            </div>
+            <div class="column" style="margin-right: 10%;">
+                <template if:true={rightColumnArticles}>
+                    <template for:each={rightColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin:10px;">
+        &nbsp;
+    </div>
+
+    <div style="margin-left: -10%; margin-right: -10%; background-color: white; text-align:center;">
+        <h3 class="header">Top Rated Articles (centred - one column)</h3>
+        <div class="container">
+            <div class="column">
+                <template if:true={leftColumnArticles}>
+                    <template for:each={leftColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+                        </div>
+                    </template>
+                    <template for:each={rightColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin:10px;">
+        &nbsp;
+    </div> -->
+
+    <!-- REMOVED: margin-left: -10%; margin-right: -10%;  -->
+    <div style="background-color: white;     margin-left: -50vw;
+    width: 100vw;
+    left: 50%;
+    position: relative;">
+        <h3 class="header">Top Rated Articles</h3>
+        <div class="container">
+            <div class="column left">
+                <template if:true={leftColumnArticles}>
+                    <template for:each={leftColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+
+                        </div>
+                    </template>
+                </template>
+            </div>
+            <div class="column">
+                <template if:true={rightColumnArticles}>
+                    <template for:each={rightColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div style="margin:10px;">
+        &nbsp;
+    </div>
+
+    <div>
+        <h3 class="header">Top Rated Articles (no background)</h3>
+
+        <div class="container">
+            <div class="column" >
+                <template if:true={leftColumnArticles}>
+                    <template for:each={leftColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+
+                        </div>
+                    </template>
+                </template>
+            </div>
+            <div class="column" >
+                <template if:true={rightColumnArticles}>
+                    <template for:each={rightColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin:10px;">
+        &nbsp;
+    </div>
+
+    <div class="component-container">
+        <h3 class="header">Top Rated Articles (shorter right column)</h3>
+
+        <div class="container">
+            <div class="column">
+                <template if:true={leftColumnArticles}>
+                    <template for:each={leftColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+
+                        </div>
+                    </template>
+                </template>
+            </div>
+            <div class="column">
+                <template if:true={rightColumnArticles}>
+                    <template for:each={rightColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3 style="max-width:70%;">{article.Title}</h3>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin:10px;">
+        &nbsp;
+    </div>
+
+    <div class="component-container">
+        <h3 class="header">Top Rated Articles (original)</h3>
+
+        <div class="container">
+            <div class="column">
+                <template if:true={leftColumnArticles}>
+                    <template for:each={leftColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+                        
+                        </div>
+                    </template>
+                </template>
+            </div>
+            <div class="column">
+                <template if:true={rightColumnArticles}>
+                    <template for:each={rightColumnArticles} for:item="article">
+                        <div key={article.Id} class="article" onclick={handleTileClick} data-id={article.Id} >
+                            <h3>{article.Title}</h3>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div> -->
+</template>

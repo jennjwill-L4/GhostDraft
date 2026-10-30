@@ -1,0 +1,27 @@
+.article-title {
+    display: block;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #0176d3;
+    text-decoration: none;
+    margin-bottom: 0.25rem;
+}
+
+.article-title:hover {
+    text-decoration: underline;
+}
+
+.article-title lightning-formatted-rich-text {
+    color: #0176d3;
+    font-weight: 700;
+}
+
+/* Limit snippet preview to 3 lines, matching the Knowledge Center search */
+.snippet-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    max-height: calc(1.4em * 3);
+}

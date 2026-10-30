@@ -1,0 +1,66 @@
+.component-container{
+    background-color: white;
+}
+.container {
+    display: flex;
+    gap: 150px;
+    padding-bottom: 70px;
+    justify-content: center;
+}
+
+.column {
+    display: grid;
+    gap: 10px;
+    width: 20%;
+    justify-content: flex-end;
+    /* flex: 1;
+    display: grid;
+    grid-template-rows: repeat(5, auto);
+    gap: 10px;
+    justify-content: space-around; */
+}
+/* .left{
+
+} */
+
+.article {
+ 
+    /* padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100px;
+    cursor:pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s, box-shadow 0.2s;  */
+
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer; */
+    cursor: pointer; 
+}
+/* .article:hover{
+    transform: translateY( -0.5 px); 
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+} */
+.article h3 {
+    margin: 0 0 5px;
+    font-size: 14px;
+}
+h3.header{
+    text-align: center;
+    padding: 70px;
+    font-weight: bold;
+    font-size: 24px;
+    padding-top: 70px;
+    font-weight: bold;
+}
+
+.article p {
+    margin: 0;
+    font-size: 2rem;
+    text-align: center;
+}

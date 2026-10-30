@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Unified Search Results (ClickHelp + Cases + Files)</masterLabel>
+    <description>Replaces the standard Global Search Results: shows ClickHelp knowledge articles plus matching Cases and Files.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="heading" type="String" label="Section Heading" default="Search Results"/>
+            <property name="pageSize" type="Integer" label="Results Per Page" default="10"
+                      description="How many results to show per page in each section before Next/Previous."/>
+            <property name="searchTerm" type="String" label="Fixed Search Term (optional)"
+                      description="Leave blank to read the term from the page URL."/>
+            <property name="showSearchBox" type="Boolean" label="Show built-in search box" default="false"
+                      description="Enable to render an input box so this component can fully replace the header search."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

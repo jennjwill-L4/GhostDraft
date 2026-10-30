@@ -1,0 +1,72 @@
+<template>
+    <div class="slds-p-around_medium">
+        <div class="slds-grid slds-gutters slds-wrap">
+
+            <!-- Left: what the user asked -->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_5-of-12">
+                <div class="slds-box slds-box_small">
+                    <h2 class="slds-text-heading_small slds-m-bottom_x-small">Your request</h2>
+                    <p class="slds-text-title slds-text-color_weak">Subject</p>
+                    <p class="slds-m-bottom_small">{subject}</p>
+                    <p class="slds-text-title slds-text-color_weak">Description</p>
+                    <lightning-formatted-rich-text value={description}></lightning-formatted-rich-text>
+                </div>
+            </div>
+
+            <!-- Right: suggested ClickHelp articles -->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12">
+                <h2 class="slds-text-heading_small slds-m-bottom_x-small">Suggested help articles</h2>
+
+                <template if:true={isLoading}>
+                    <div class="slds-is-relative slds-p-vertical_large">
+                        <lightning-spinner alternative-text="Finding articles..." size="small"></lightning-spinner>
+                    </div>
+                </template>
+
+                <template if:false={isLoading}>
+                    <template if:true={hasArticles}>
+                        <template for:each={pagedArticles} for:item="a">
+                            <div key={a.key} class="slds-box slds-box_x-small slds-m-bottom_x-small">
+                                <a href={a.fullUrl} target="_blank" rel="noopener noreferrer" class="article-title">
+                                    <lightning-formatted-rich-text value={a.titleHtml}></lightning-formatted-rich-text>
+                                </a>
+                                <div class="snippet-clamp slds-text-body_small slds-text-color_weak slds-m-top_xxx-small">
+                                    <lightning-formatted-rich-text value={a.snippetHtml}></lightning-formatted-rich-text>
+                                </div>
+                            </div>
+                        </template>
+
+                        <template if:true={showPager}>
+                            <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-top_small">
+                                <span class="slds-text-body_small slds-text-color_weak">{pagerLabel}</span>
+                                <div>
+                                    <lightning-button label="Previous" onclick={handlePrev}
+                                                      disabled={disablePrev}
+                                                      class="slds-m-right_x-small"></lightning-button>
+                                    <lightning-button label="Next" onclick={handleNext}
+                                                      disabled={disableNext}></lightning-button>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+
+                    <template if:false={hasArticles}>
+                        <p class="slds-text-color_weak">No related articles found for this subject.</p>
+                    </template>
+                </template>
+            </div>
+
+        </div>
+
+        <!-- Resolution prompt -->
+        <div class="slds-align_absolute-center slds-m-top_large slds-text-align_center">
+            <div>
+                <p class="slds-text-heading_small slds-m-bottom_small">Did this resolve your issue?</p>
+                <lightning-button variant="success" label="Yes, I'm all set"
+                                  onclick={handleYes} class="slds-m-right_x-small"></lightning-button>
+                <lightning-button variant="brand" label="No, submit a case"
+                                  onclick={handleNo}></lightning-button>
+            </div>
+        </div>
+    </div>
+</template>

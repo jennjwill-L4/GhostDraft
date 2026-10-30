@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Case Intake Form</masterLabel>
+    <description>Query Category (permission-filtered), Subject, and rich-text Description for the case flow.</description>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="isAccessApprover" type="Boolean" label="Is User Access Approver" role="inputOnly"
+                      description="Pass Get_Current_User.User_Access_Approver__c. Adds the User Access category when true."/>
+            <property name="queryCategory" type="String" label="Query Category (output)"/>
+            <property name="subject" type="String" label="Subject (output)"/>
+            <property name="description" type="String" label="Description / rich text HTML (output)"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

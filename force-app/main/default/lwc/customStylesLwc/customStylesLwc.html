@@ -1,0 +1,14 @@
+<template>
+  <nav class="nav-bar">
+      <a href={basePath} class="nav-link" onclick={navigateToPage}>HOME</a>
+      <a href={knowledgeCenterUrl} class="nav-link" onclick={navigateToPage}>KNOWLEDGE CENTER</a>
+      <a href={downloadCenterUrl} class="nav-link" onclick={navigateToPage}>DOWNLOAD CENTER</a>
+      <div class="dropdown">
+          <a href="#" class="nav-link">SUPPORT CENTER &#9662;</a>
+          <div class="dropdown-content">
+              <a href={submitTicketUrl} onclick={navigateToPage}>SUBMIT A TICKET</a>
+              <a href={myTicketsUrl} onclick={navigateToPage}>MY TICKETS</a>
+          </div>
+      </div>
+  </nav>
+</template>

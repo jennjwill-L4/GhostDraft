@@ -1,0 +1,35 @@
+<template>
+    <div class="slds-p-around_medium">
+        <!-- <p class="slds-text-heading_small slds-m-bottom_medium">
+            Please tell us what you need help with.
+        </p> -->
+
+        <lightning-combobox
+            label="Query Category"
+            value={queryCategory}
+            placeholder="Select a category"
+            options={categoryOptions}
+            onchange={handleCategory}
+            required>
+        </lightning-combobox>
+
+        <lightning-input
+            class="slds-m-top_small"
+            label="Subject"
+            value={subject}
+            onchange={handleSubject}
+            required>
+        </lightning-input>
+
+        <div class="slds-form-element slds-m-top_small">
+            <label class="slds-form-element__label">
+                <abbr class="slds-required" title="required">*</abbr>Description
+            </label>
+            <lightning-input-rich-text
+                value={description}
+                onchange={handleDescription}
+                placeholder="Describe your request...">
+            </lightning-input-rich-text>
+        </div>
+    </div>
+</template>
