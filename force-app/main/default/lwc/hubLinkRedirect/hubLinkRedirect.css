@@ -1,0 +1,8 @@
+.hub-redirect {
+    position: relative;
+    min-height: 4rem;
+}
+
+.hub-redirect__url {
+    word-break: break-all;
+}

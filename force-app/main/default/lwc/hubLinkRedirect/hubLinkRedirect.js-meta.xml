@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Hub Link Redirect</masterLabel>
+    <description>Sends the logged-in user to an external URL with their Account HUB ID added as a URL parameter.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="destinationUrl" type="String" label="Destination URL"
+                default="https://hub.ghostdraft.com/godocs"
+                description="Where users are sent. The HUB ID parameter is added automatically." />
+            <property name="paramName" type="String" label="Parameter Name"
+                default="org"
+                description="Name of the URL parameter that carries the HUB ID." />
+            <property name="disableRedirect" type="Boolean" label="Pause Redirect"
+                default="false"
+                description="Shows the generated link instead of redirecting. Use for testing." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

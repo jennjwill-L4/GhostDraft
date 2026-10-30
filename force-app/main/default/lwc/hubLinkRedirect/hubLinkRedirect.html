@@ -1,0 +1,31 @@
+<template>
+    <div class="hub-redirect slds-p-around_medium slds-text-align_center">
+        <template lwc:if={isLoading}>
+            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+        </template>
+
+        <template lwc:elseif={showPreview}>
+            <div class="slds-box slds-theme_shade slds-text-align_left">
+                <p class="slds-text-title_bold slds-m-bottom_x-small">Hub link redirect</p>
+                <p class="slds-m-bottom_x-small">{previewMessage}</p>
+                <p class="hub-redirect__url slds-text-body_small slds-m-bottom_small">{targetUrl}</p>
+                <template lwc:if={errorMessage}>
+                    <p class="slds-text-color_error slds-m-bottom_small">{errorMessage}</p>
+                </template>
+                <a href={targetUrl}>Open link</a>
+            </div>
+        </template>
+
+        <template lwc:elseif={errorMessage}>
+            <p class="slds-m-bottom_small">{errorMessage}</p>
+            <template lwc:if={targetUrl}>
+                <a href={targetUrl}>Continue to Knowledge Articles</a>
+            </template>
+        </template>
+
+        <template lwc:else>
+            <p class="slds-m-bottom_small">Opening Knowledge Articles…</p>
+            <a href={targetUrl}>Open Knowledge Articles if nothing happens</a>
+        </template>
+    </div>
+</template>
